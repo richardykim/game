@@ -8,12 +8,10 @@
 
 class Wordgame
 	attr_reader :word, :allowed_guess
-	attr_accessor :letter
 	
 	def initialize
 		@word = word
-		@letter = letter
-	  @allowed_guess = 0
+	  @guesses = 0
     @is_over = false
 	end
 	def word_converter(word)
@@ -22,15 +20,23 @@ class Wordgame
 		converted_word
 	end
 	def allowed_guess(word)
-	  allowed_guess = 5 + word.length
-	    puts "You are allowed #{allowed_guess} guesses "
+	  @guesses = 5 + word.length
+	    puts "You are allowed #{@guesses} guesses "
 	end
-	def guess_letter(letter,word)
-	  if word.include? letter
-	    puts TRUE
-	  else
-	    puts false
-	  end
+	
+	def guess_letter(letter, word)
+  	  if word.include? letter
+  	    puts "Correct!"
+  	    puts "You have #{@guesses} left"
+  	  else
+  	    puts "I'm sorry, that letter is not in the word."
+  	    @guesses = @guesses - 1
+  	    if @guesses == 0 
+  	      puts "Game over!"
+  	    else 
+  	      puts "you are allowed #{@guesses} guesses"
+  	    end
+  	  end
 	end
 end
 
@@ -38,15 +44,15 @@ end
 ## Driver Code
 
 puts "Welcome to the Word Game!"
-game = Wordgame.new
-
 puts "Player 1, please enter a word"
 word = gets.chomp
+game = Wordgame.new
 
-puts "Player 2, please try guessing the word by stating a letter"
-puts game.allowed_guess(word)
-puts game.word_converter(word)
-letter = gets.chomp
-
-game.guess_letter(letter,word)
-
+loop do 
+  puts "Player 2, please try guessing the word by stating a letter"
+  puts game.allowed_guess(word)
+  puts game.word_converter(word)
+  letter = gets.chomp
+  
+  game.guess_letter(letter, word)
+end 
