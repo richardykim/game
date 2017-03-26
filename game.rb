@@ -17,13 +17,20 @@ class Wordgame
     @is_over = false
 	end
 	def word_converter(word)
-		@split_word = word.split("")
+		split_word = word.split("")
 		converted_word = ["_ " * split_word.length ]
 		converted_word
 	end
-	def allowed_guess
-	  allowed_guess = 5 + split_word.length
-	  puts "You are allowed #{allowed_guess} guesses "
+	def allowed_guess(word)
+	  allowed_guess = 5 + word.length
+	    puts "You are allowed #{allowed_guess} guesses "
+	end
+	def guess_letter(letter,word)
+	  if word.include? letter
+	    puts TRUE
+	  else
+	    puts false
+	  end
 	end
 end
 
@@ -36,10 +43,10 @@ game = Wordgame.new
 puts "Player 1, please enter a word"
 word = gets.chomp
 
-
 puts "Player 2, please try guessing the word by stating a letter"
-puts game.allowed_guess
+puts game.allowed_guess(word)
 puts game.word_converter(word)
 letter = gets.chomp
 
+game.guess_letter(letter,word)
 
