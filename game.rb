@@ -5,9 +5,8 @@
 # If the user gets the word, they will get a congratulatory message.
 # If the user does not get the word, they will get a taunting message.
 
-
 class Wordgame
-	attr_reader :word, :allowed_guess
+	attr_reader :word, :guesses
 	
 	def initialize
 		@word = word
@@ -23,7 +22,9 @@ class Wordgame
 	  @guesses = 5 + word.length
 	    puts "You are allowed #{@guesses} guesses "
 	end
-	
+	def correct_word(word, letter)
+	  word.index
+	end
 	def guess_letter(letter, word)
   	  if word.include? letter
   	    puts "Correct!"
@@ -48,9 +49,9 @@ puts "Player 1, please enter a word"
 word = gets.chomp
 game = Wordgame.new
 
-loop do 
-  puts "Player 2, please try guessing the word by stating a letter"
-  puts game.allowed_guess(word)
+puts "Player 2, please try guessing the word by stating a letter"
+puts game.allowed_guess(word)
+until game.guesses == 0
   puts game.word_converter(word)
   letter = gets.chomp
   
