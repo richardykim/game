@@ -5,14 +5,26 @@
 # If the user gets the word, they will get a congratulatory message.
 # If the user does not get the word, they will get a taunting message.
 
-class Wordgame
-	def initialize
-		@word = word 
-	end
-	def word_splitter(word)
-		split_word = word.split
-	end
 
+class Wordgame
+	attr_reader :word, :allowed_guess
+	attr_accessor :letter
+	
+	def initialize
+		@word = word
+		@letter = letter
+	  @allowed_guess = 0
+    @is_over = false
+	end
+	def word_converter(word)
+		@split_word = word.split("")
+		converted_word = ["_ " * split_word.length ]
+		converted_word
+	end
+	def allowed_guess
+	  allowed_guess = 5 + split_word.length
+	  puts "You are allowed #{allowed_guess} guesses "
+	end
 end
 
 
@@ -24,5 +36,10 @@ game = Wordgame.new
 puts "Player 1, please enter a word"
 word = gets.chomp
 
+
 puts "Player 2, please try guessing the word by stating a letter"
+puts game.allowed_guess
+puts game.word_converter(word)
 letter = gets.chomp
+
+
