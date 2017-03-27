@@ -9,7 +9,7 @@ class Wordgame
 	attr_reader :word, :guesses
 	
 	def initialize
-		@word = word
+	  @word = word
 	  @guesses = 0
 	  @used_words = []
 	  @joined_word = ""
