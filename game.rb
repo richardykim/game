@@ -11,11 +11,11 @@ class Wordgame
 	def initialize
 		@word = word
 	  @guesses = 0
+	  @joined_word = ""
 	  @converted_word = ""
 	end
 	def word_converter(word)
-		split_word = word.split("")
-		@converted_word = ["_ " * split_word.length ]
+		@converted_word = ["_ " *word.length ]
 		@converted_word
 	end
 	def allowed_guess(word)
@@ -26,16 +26,25 @@ class Wordgame
 	def correct_input(word, letter)
 	  if word.include? letter
 	    number = word.index(letter)
-	    joined_word = @converted_word.join
-      joined_word[number] = letter
-	    puts joined_word
+	    @joined_word = @converted_word.join
+      @joined_word[number*2] = letter
+	    puts @joined_word
 	  end
 	end
 
 	def guess_letter(letter, word)
+	  right_guess = ""
   	  if word.include? letter
-  	    puts "Correct!"
-  	    correct_input(word, letter)
+  	    if right_guess.include? letter
+  	      puts letter + "was already given. Please try another letter"
+  	      puts @joined_word
+  	     else 
+  	      puts "Correct!"
+  	      correct_input(word, letter)
+  	     end
+  	    unless @joined_word.include? "_"
+  	      puts "WELL DONE! YOU WIN!"
+  	    end
   	    puts "You have #{@guesses} guesses left"
   	  else
   	    puts "I'm sorry, #{letter} is not in the word."
@@ -43,9 +52,13 @@ class Wordgame
   	    if @guesses == 0 
   	      puts "Game over!"
   	    else 
+  	      
   	      puts "you are allowed #{@guesses} guesses"
   	    end
   	  end
+  	 # unless @joined_word.include? '_'
+    #     puts "WELL DONE!! YOU WIN!"
+    #   end
 	end
 end
 
@@ -56,6 +69,7 @@ puts "Welcome to the Word Game!"
 puts "Player 1, please enter a word"
 word = gets.chomp
 game = Wordgame.new
+
 
 puts "Player 2, please try guessing the word by stating a letter"
 puts game.allowed_guess(word)
