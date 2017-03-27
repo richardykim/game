@@ -15,50 +15,51 @@ class Wordgame
 	  @converted_word = ""
 	end
 	def word_converter(word)
-		@converted_word = ["_ " *word.length ]
-		@converted_word
+		@converted_word = "_" *word.length 
+		@converted_word.gsub(/(.{1})/, '\1 ')
 	end
 	def allowed_guess(word)
 	  @guesses = 3 + word.length
 	    puts "You are allowed #{@guesses} guesses "
 	end
-	
 	def correct_input(word, letter)
 	  if word.include? letter
 	    number = word.index(letter)
-	    @joined_word = @converted_word.join
-      @joined_word[number*2] = letter
-	    puts @joined_word
+	    @joined_word = @converted_word
+      @joined_word[number] = letter
+	    puts @joined_word.gsub(/(.{1})/, '\1 ')
 	  end
 	end
 
 	def guess_letter(letter, word)
 	  right_guess = ""
-  	  if word.include? letter
-  	    if right_guess.include? letter
-  	      puts letter + "was already given. Please try another letter"
-  	      puts @joined_word
-  	     else 
-  	      puts "Correct!"
-  	      correct_input(word, letter)
-  	     end
-  	    unless @joined_word.include? "_"
-  	      puts "WELL DONE! YOU WIN!"
-  	    end
-  	    puts "You have #{@guesses} guesses left"
-  	  else
-  	    puts "I'm sorry, #{letter} is not in the word."
-  	    @guesses = @guesses - 1
-  	    if @guesses == 0 
-  	      puts "Game over!"
-  	    else 
-  	      
-  	      puts "you are allowed #{@guesses} guesses"
-  	    end
+  	if word.include? letter
+  	  if right_guess.include? letter
+  	    puts letter + "was already given. Please try another letter"
+  	    right_guess = right_guess + letter
+  	    puts @joined_word
+  	  else 
+  	    right_guess = right_guess + letter
+  	    puts "Correct!"
+  	    correct_input(word, right_guess)
   	  end
-  	 # unless @joined_word.include? '_'
-    #     puts "WELL DONE!! YOU WIN!"
-    #   end
+  	  unless @joined_word.include? "_"
+  	     @guesses = 0
+  	  end
+  	  if @guesses == 0
+  	    puts "CONGRATS! YOU WIN!"
+  	  else
+        puts "You have #{@guesses} guesses left"
+      end
+  	else
+  	  puts "I'm sorry, #{letter} is not in the word."
+  	  @guesses = @guesses - 1
+  	  if @guesses == 0 
+  	    puts "Game over!"
+  	  else 
+  	    puts "you are allowed #{@guesses} guesses"
+  	  end
+  	end
 	end
 end
 
