@@ -11,24 +11,30 @@ class Wordgame
 	def initialize
 		@word = word
 	  @guesses = 0
-    @is_over = false
+	  @converted_word = ""
 	end
 	def word_converter(word)
 		split_word = word.split("")
-		converted_word = ["_ " * split_word.length ]
-		converted_word
+		@converted_word = ["_ " * split_word.length ]
+		@converted_word
 	end
 	def allowed_guess(word)
 	  @guesses = 5 + word.length
 	    puts "You are allowed #{@guesses} guesses "
 	end
-	def correct_word(word, letter)
-	  word.index
+	
+	def correct_input(word, letter)
+	  if word.include? letter
+	    number = word.index(letter)
+	    @converted_word.map{|x|x[number] ? letter : x}
+	    converted_word.split
+	  end
 	end
+
 	def guess_letter(letter, word)
   	  if word.include? letter
   	    puts "Correct!"
-  	    puts "You have #{@guesses} left"
+  	    puts "You have #{@guesses} guesses left"
   	  else
   	    puts "I'm sorry, that letter is not in the word."
   	    @guesses = @guesses - 1
