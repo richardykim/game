@@ -19,24 +19,26 @@ class Wordgame
 		@converted_word
 	end
 	def allowed_guess(word)
-	  @guesses = 5 + word.length
+	  @guesses = 3 + word.length
 	    puts "You are allowed #{@guesses} guesses "
 	end
 	
 	def correct_input(word, letter)
 	  if word.include? letter
 	    number = word.index(letter)
-	    @converted_word.map{|x|x[number] ? letter : x}
-	    converted_word.split
+	    joined_word = @converted_word.join
+      joined_word[number] = letter
+	    puts joined_word
 	  end
 	end
 
 	def guess_letter(letter, word)
   	  if word.include? letter
   	    puts "Correct!"
+  	    correct_input(word, letter)
   	    puts "You have #{@guesses} guesses left"
   	  else
-  	    puts "I'm sorry, that letter is not in the word."
+  	    puts "I'm sorry, #{letter} is not in the word."
   	    @guesses = @guesses - 1
   	    if @guesses == 0 
   	      puts "Game over!"
@@ -57,9 +59,9 @@ game = Wordgame.new
 
 puts "Player 2, please try guessing the word by stating a letter"
 puts game.allowed_guess(word)
+puts game.word_converter(word)
+
 until game.guesses == 0
-  puts game.word_converter(word)
   letter = gets.chomp
-  
   game.guess_letter(letter, word)
 end 
