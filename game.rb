@@ -6,68 +6,69 @@
 # If the user does not get the word, they will get a taunting message.
 
 class Wordgame
-	attr_reader :word, :guesses
-	
-	def initialize
-	  @word = word
-	  @guesses = 0
-	  @used_words = []
-	  @joined_word = ""
-	  @converted_word = ""
-	end
-	def word_converter(word)
-		@converted_word = "_" *word.length 
-		@converted_word.gsub(/(.{1})/, '\1 ')
-	end
-	def allowed_guess(word)
-	  @guesses = 3 + word.length
-	    puts "You are allowed #{@guesses} guesses "
-	end
-	def correct_input(word, letter)
-	  if word.include? letter
-	    number = word.index(letter)
-	    @joined_word = @converted_word
-      @joined_word[number] = letter
-	    puts @joined_word.gsub(/(.{1})/, '\1 ')
-	  end
-	end
+  attr_reader :word, :guesses
+  
+  def initialize
+    @word = word
+    @guesses = 0
+    @used_words = []
+    @joined_word = ""
+    @converted_word = ""
+  end
+  def word_converter(word)
+    @converted_word = "_" *word.length 
+    @converted_word.gsub(/(.{1})/, '\1 ')
+  end
+  def allowed_guess(word)
+    @guesses = 3 + word.length
+      puts "You are allowed #{@guesses} guesses "
+  end
+  def correct_input(word, letter)
+    if array = (0... word.length).find_all { |i| word[i,1] == letter }
+      array.each { |x|
+      @converted_word[x] = letter
+      }
+      @joined_word = @converted_word
+      puts @converted_word.gsub(/(.{1})/, '\1 ')
+    end
+  end
 
-	def guess_letter(letter, word)
-	  right_guess = ""
-  	if word.include? letter
-  	  if @used_words.include? letter
-  	    puts letter + " was already given. Please try another letter"
-  	    puts @joined_word.gsub(/(.{1})/, '\1 ')
-  	  else 
-  	    right_guess = right_guess + letter
-  	    puts "Correct!"
-  	    @used_words << letter
-  	    correct_input(word, right_guess)
-  	  end
-  	  unless @joined_word.include? "_"
-  	     @guesses = 0
-  	  end
-  	  if @guesses == 0
-  	    puts "CONGRATS! YOU WIN!"
-  	  else
+  def guess_letter(letter, word)
+    right_guess = ""
+    if word.include? letter
+      if @used_words.include? letter
+        puts letter + " was already given. Please try another letter"
+        puts @joined_word.gsub(/(.{1})/, '\1 ')
+      else 
+        right_guess = right_guess + letter
+        puts "Correct!"
+        @used_words << letter
+        correct_input(word, right_guess)
+      end
+      unless @joined_word.include? "_"
+         @guesses = 0
+      end
+      if @guesses == 0
+        puts "CONGRATS! YOU WIN!"
+      else
         puts "You have #{@guesses} guesses left"
       end
-  	else
-  	  if @used_words.include? letter
-  	    puts letter + " was already given. Please try another letter"
-  	    puts @joined_word.gsub(/(.{1})/, '\1 ')
-  	  else
-  	    puts "I'm sorry, #{letter} is not in the word."
-  	    @used_words << letter
-  	    @guesses = @guesses - 1
-  	  end
-  	  if @guesses == 0 
-  	    puts "Game over!"
-  	  else 
-  	    puts "you have #{@guesses} guesses left"
-  	  end
-  	end
-	end
+    else
+      if @used_words.include? letter
+        puts letter + " was already given. Please try another letter"
+        puts @joined_word.gsub(/(.{1})/, '\1 ')
+      else
+        puts "I'm sorry, #{letter} is not in the word."
+        @used_words << letter
+        @guesses = @guesses - 1
+      end
+      if @guesses == 0 
+        puts "Game over!"
+      else 
+        puts "you have #{@guesses} guesses left"
+      end
+    end
+  end
 end
 
 
